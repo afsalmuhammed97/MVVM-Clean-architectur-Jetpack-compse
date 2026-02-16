@@ -50,7 +50,7 @@ android {
 }
 
 dependencies {
-
+    val room_version = "2.8.4"
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -86,5 +86,21 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.coil.kt.coil.compose)
+    //Room
+
+//    // Room
+
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
+    implementation(libs.androidx.compose.material)
+//    implementation(libs.bundles.room)
+//    ksp(libs.androidx.room.compiler)
 
 }
+//ksp {
+//    arg("room.schemaLocation", "$projectDir/schemas")
+//    arg("room.incremental", "true")
+//    arg("room.expandProjection", "true")
+//}

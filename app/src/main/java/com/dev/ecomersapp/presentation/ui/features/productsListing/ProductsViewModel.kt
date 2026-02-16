@@ -9,6 +9,7 @@ import com.dev.ecomersapp.domain.usecase.GetProductsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,6 +25,10 @@ class ProductsViewModel @Inject constructor(
     val productState: StateFlow<NetworkResult<List<Product>>> =_productStat
 
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing = _isRefreshing.asStateFlow()
+
+
     private var allProducts: List<Product> = emptyList()
 
 
@@ -32,11 +37,20 @@ class ProductsViewModel @Inject constructor(
     val categoriesState = _categoriesState
 
      init {
-         fetchProducts()
+         fetchProducts(false)
          fetchCategories()
      }
 
-    fun  fetchProducts(){
+    fun refreshProducts() {
+        viewModelScope.launch {
+            _isRefreshing.value = true
+            fetchProducts(refresh = true)
+            _isRefreshing.value = false
+        }
+    }
+
+
+    fun  fetchProducts(refresh: Boolean){
         viewModelScope.launch {
             getProductsUseCase().collect {result ->
                 if (result is NetworkResult.Success){

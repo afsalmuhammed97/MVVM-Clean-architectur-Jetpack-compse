@@ -31,13 +31,13 @@ object NetworkModule {
     @Singleton
     fun provideApi(retrofit: Retrofit): ProductApiService=retrofit.create(ProductApiService::class.java)
 
-    @Provides
-    @Singleton
-    fun provideRepository(productApiService: ProductApiService ) =ProductRepository(productApiService)
+//    @Provides
+//    @Singleton
+//    fun provideRepository(productApiService: ProductApiService, ) =ProductRepository(productApiService)
 
-    @Provides
-    @Singleton
-    fun provideUseCases(productRepository:ProductRepository)= GetProductsUseCase(productRepository)
+//    @Provides
+//    @Singleton
+//    fun provideUseCases(productRepository:ProductRepository)= GetProductsUseCase(productRepository)
 
 
 
